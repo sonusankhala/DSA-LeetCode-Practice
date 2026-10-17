@@ -1,41 +1,37 @@
 class Solution {
+
+    boolean exists(char[][] board, int i, int j, char [] word, int idx){
+        if(i<0 || i>=board.length || j<0 || j>=board[0].length || board[i][j]=='*' || board[i][j]!=word[idx]){
+            return false;
+        }
+
+        if(idx==word.length-1){
+            return true;
+        }
+
+        char ch=board[i][j];
+        board[i][j]='*';
+       boolean ans= exists(board, i+1,j,word,idx+1)||
+       exists(board, i-1,j,word,idx+1)||
+       exists(board, i,j+1,word,idx+1)||
+       exists(board, i,j-1,word,idx+1);
+       board[i][j]=ch;
+
+       return ans;
+    
+    }
+
     public boolean exist(char[][] board, String word) {
-        int n=board.length;
-        int m=board[0].length;
-        boolean ans=false;
-        boolean [][] visited=new boolean[n][m];
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(board[i][j]==word.charAt(0)){
-                    ans=Solve(board, word, visited, i, j, 0);
-                    if(ans){
-                        return true;
-                    }
+
+        char[] word_arr = word.toCharArray();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == word_arr[0] && exists(board, i, j, word_arr, 0)) {
+                    return true;
                 }
             }
         }
         return false;
-    }
 
-    boolean Solve(char [][] arr,String word, boolean [][] visited, int i, int j, int k){
-        if(k==word.length()){
-            return true;
-        }
-        if(i<0 || i>= arr.length || j<0 || j>=arr[0].length 
-        || visited[i][j] || arr[i][j]!=word.charAt(k))
-        {
-            return false;
-        }
-        visited[i][j]=true;
-
-        if(Solve(arr, word, visited, i+1,j,k+1)
-        || Solve(arr, word, visited, i-1,j,k+1)
-        || Solve(arr, word, visited, i, j+1, k+1)
-        || Solve(arr, word, visited, i, j-1, k+1))
-        {
-            return true;
-        }
-        visited[i][j]=false;
-        return false;
     }
 }
