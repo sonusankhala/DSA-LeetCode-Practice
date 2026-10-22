@@ -11,32 +11,23 @@
 class Solution {
     public ListNode middleNode(ListNode head) {
 
-      if(head==null || head.next==null){
-        return head;
-      }
-
-      int c=0;
-      ListNode t=head;
-      while(t!=null){
-        c++;
-        t=t.next;
-      }
-
-      
-      
-    int mid=(c/2)+1;
-   
-   ListNode temp=head;
-   int z=1;
-while(temp!=null){
-      if(z==mid){
-        break;
-      }
-      z++;
-      temp=temp.next;
+        int c=0;
+        ListNode node=head;
+        while(node!=null){
+            c++;
+            node=node.next;
+        }
+        int mid=(c/2)+1;
+        ListNode temp=head;
+        int x=1;
+        while(temp!=null){
+            if(x==mid){
+                break;
+            }
+            x++;
+            temp=temp.next;
+        }
+        return temp;
         
     }
-
-     return temp;
-}
 }
