@@ -11,7 +11,7 @@
  */
 public class Solution {
     public ListNode detectCycle(ListNode head) {
-        /*
+        
         ListNode slow=head;
         ListNode fast=head;
       //  int c=1;
@@ -29,7 +29,8 @@ public class Solution {
             }
         }
     return null;
-    */
+    
+    /*
     Map<ListNode,Integer> map=new HashMap<>();
     ListNode temp=head;
     while(temp!=null){
@@ -40,5 +41,7 @@ public class Solution {
         temp=temp.next;
     }
     return null;
+    */
     }
+
 }
