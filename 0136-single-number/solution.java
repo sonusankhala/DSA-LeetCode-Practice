@@ -1,24 +1,9 @@
 class Solution {
     public int singleNumber(int[] nums) {
-       
-       /*
-        Arrays.sort(nums);
-        int x=0;
-        for(int i=0;i<nums.length;i++){
-            if(i%2==0){
-                x+=nums[i];
-            }else{
-                x-=nums[i];
-            }
+        int n=nums[0];
+        for(int i=1;i<nums.length;i++){
+             n^=nums[i];
         }
-        return x;
-        */
-        int ans = 0;
-        for(int num : nums) {
-            ans ^= num;
-            System.out.println(ans);
-        }
-       
-        return ans;
+        return n;  
     }
 }
