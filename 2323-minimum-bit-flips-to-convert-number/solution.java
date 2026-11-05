@@ -1,13 +1,15 @@
 class Solution {
     public int minBitFlips(int start, int goal) {
         int ans=start^goal;
-         int c=0;
-        for(int i=0;i<=31;i++){
-            if((ans&(1<<i))!=0){
-                c++;
-            }
-        }
-        return c;
-        
+        return countSetBit(ans);
+    }
+
+    int countSetBit(int n){
+       int c=0;
+       while(n!=0){
+        c+=n&1;
+        n=n>>1;
+       }
+       return c;
     }
 }
