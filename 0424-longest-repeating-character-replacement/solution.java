@@ -1,7 +1,6 @@
 class Solution {
     public int characterReplacement(String s, int k) {
-
-        int maxlen = 0;
+          int maxlen = 0;
 
         /*brute force solution
         
@@ -45,4 +44,5 @@ class Solution {
 
         return maxlen;
     }
+        
 }
