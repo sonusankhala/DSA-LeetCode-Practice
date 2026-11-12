@@ -1,46 +1,55 @@
 class Solution {
     public String minWindow(String s, String t) {
-        if (s.length() < t.length()) {
+        if (s == null || t == null || s.length() < t.length()) {
             return "";
         }
 
-        Map<Character, Integer> charCount = new HashMap<>();
-        for (char ch : t.toCharArray()) {
-            charCount.put(ch, charCount.getOrDefault(ch, 0) + 1);
+        // Frequency map for characters in t
+        int[] need = new int[128];
+        for (char c : t.toCharArray()) {
+            need[c]++;
         }
 
-        int targetCharsRemaining = t.length();
-        int[] minWindow = {0, Integer.MAX_VALUE};
-        int startIndex = 0;
-
-        for (int endIndex = 0; endIndex < s.length(); endIndex++) {
-            char ch = s.charAt(endIndex);
-            if (charCount.containsKey(ch) && charCount.get(ch) > 0) {
-                targetCharsRemaining--;
-            }
-            charCount.put(ch, charCount.getOrDefault(ch, 0) - 1);
-
-            if (targetCharsRemaining == 0) {
-                while (true) {
-                    char charAtStart = s.charAt(startIndex);
-                    if (charCount.containsKey(charAtStart) && charCount.get(charAtStart) == 0) {
-                        break;
-                    }
-                    charCount.put(charAtStart, charCount.getOrDefault(charAtStart, 0) + 1);
-                    startIndex++;
-                }
-
-                if (endIndex - startIndex < minWindow[1] - minWindow[0]) {
-                    minWindow[0] = startIndex;
-                    minWindow[1] = endIndex;
-                }
-
-                charCount.put(s.charAt(startIndex), charCount.getOrDefault(s.charAt(startIndex), 0) + 1);
-                targetCharsRemaining++;
-                startIndex++;
-            }
+        int requiredTypeCount = 0; // Number of unique characters in t that need to be matched
+        for (int count : need) {
+            if (count > 0) requiredTypeCount++;
         }
 
-        return minWindow[1] >= s.length() ? "" : s.substring(minWindow[0], minWindow[1] + 1);        
+        int formed = 0; // How many unique characters currently match the desired frequency
+        int[] windowCounts = new int[128];
+
+        int l = 0, r = 0;
+        int minLen = Integer.MAX_VALUE;
+        int startIdx = 0;
+
+        while (r < s.length()) {
+            char c = s.charAt(r);
+            windowCounts[c]++;
+
+            if (need[c] > 0 && windowCounts[c] == need[c]) {
+                formed++;
+            }
+
+            // Try and contract the window until it ceases to be 'desirable'
+            while (l <= r && formed == requiredTypeCount) {
+                c = s.charAt(l);
+
+                // Update the smallest window found so far
+                if (r - l + 1 < minLen) {
+                    minLen = r - l + 1;
+                    startIdx = l;
+                }
+
+                // Character at the left pointer is about to be excluded from the window
+                windowCounts[c]--;
+                if (need[c] > 0 && windowCounts[c] < need[c]) {
+                    formed--;
+                }
+                l++;
+            }
+            r++;
+        }
+
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(startIdx, startIdx + minLen);
     }
 }
