@@ -1,33 +1,28 @@
 class Solution {
     public int numberOfSubstrings(String s) {
-    
-    /*
-    int n=s.length();
-    int count=0;
-
-        for(int i=0;i<n;i++){
+        int c=0;
+        /*
+        for(int i=0;i<s.length();i++){
             ArrayList<Character> arr=new ArrayList<>();
-
-            for(int j=i;j<n;j++){
+            for(int j=i;j<s.length();j++){
                 arr.add(s.charAt(j));
-                if(arr.contains('a') && arr.contains('b') && arr.contains('c')){
-                    count+=n-j;
-                    break;
+                if(arr.contains('a')
+                && arr.contains('b')
+                && arr.contains('c')){
+                    c++;
                 }
-                
             }
         }
-        return count;
         */
-        int lastSeen [] ={-1,-1,-1};
-        int n=s.length();
-        int count=0;
-        for(int i=0;i<n;i++){
-            lastSeen[s.charAt(i)-'a']=i;
-            if(lastSeen[0]!=-1 && lastSeen[1]!=-1 && lastSeen[2]!=-1){
-                count=count+(1+Math.min(lastSeen[0], Math.min(lastSeen[1],lastSeen[2])));
+        int [] arr={-1,-1,-1};
+        for(int i=0;i<s.length();i++){
+            arr[s.charAt(i)-'a']=i;
+            if(arr[0]!=-1 && arr[1]!=-1 && arr[2]!=-1){
+                c=c+(1+Math.min(arr[0],Math.min(arr[1],arr[2])));
             }
         }
-        return count;   
+        return c;
+
+        
     }
 }
