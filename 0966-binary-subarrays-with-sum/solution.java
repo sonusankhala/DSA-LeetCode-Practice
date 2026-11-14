@@ -1,41 +1,33 @@
 class Solution {
     public int numSubarraysWithSum(int[] nums, int goal) {
 
-     /*
-        int count=0;
-        for(int i=0;i<nums.length;i++){
-            int s=0;
-            for(int j=i; j<nums.length;j++){
-                s+=nums[j];
-                if(s==goal){
-                    count++;
-                }
-                if(s>goal){
-                    break;
-                }
-            }
-        }
-        return count;
-
-        */
-        return find(nums, goal)-find(nums, goal-1);
-       // return 
+        return countSubLess(nums,goal)-countSubLess(nums,goal-1);
     }
 
-    int find(int [] nums, int g){
-        int l=0, r=0,c=0,s=0;
-        int n=nums.length;
-        while(r<n){
-            if(g<0){
-                return 0;
+        
+        /*
+        for(int i=0;i<nums.length;i++){
+            int sum=0;
+            for(int j=i;j<nums.length;j++){
+                sum+=nums[j];
+                if(sum==goal){
+                    c++;
+                }
+
             }
-           s+=nums[r];
-           while(s>g && l<=r){
-            s-=nums[l];
-            l++;
-           }
-           c+=r-l+1;
-           r++;
+        }
+        */
+    int countSubLess(int nums[],int goal){
+        int c=0;
+        int l=0,r=0,sum=0;
+        while(r<nums.length){
+            sum+=nums[r];
+            while(sum>goal && l<=r){
+                sum-=nums[l];
+                l++;
+            }
+            c+=r-l+1;
+            r++;
         }
         return c;
     }
